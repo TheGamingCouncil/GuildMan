@@ -1,4 +1,4 @@
-# eso-guildman
+# GuildMan
 A Guild Management Addon for Elder Scrolls Online
 
 WIP
