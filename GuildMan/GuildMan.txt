@@ -1,0 +1,10 @@
+## Title: GuildMan
+## Description: Guild Management
+## Author: @RizzleMaTizzle
+## APIVersion: 101039
+## AddOnVersion: 1
+## IsLibrary: False
+## SavedVariables: GuildManSavedVariables
+## DependsOn: LibChatMessage LibDebugLogger>=180 LibSlashCommander
+
+GuildMan.lua
