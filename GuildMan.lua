@@ -4,6 +4,8 @@ GuildManAddon = {}
 --Set name of addon
 GuildManAddon.name = "GuildMan"
 
+--Global Vars
+GuildManAddon.G_NUM_SECONDS_INACTIVE=604800
 --Global Messages 
 GuildManAddon.G_STRING_INITIALIZE_MSG="Loaded Addon: GuildMan"
 
@@ -20,6 +22,9 @@ GuildManAddon.G_STRING_SLASH_SUBCMD_GUILDMAN_HELP_DESC="print help"
 
 GuildManAddon.G_ARRAY_SLASH_SUBCMD_GUILDMAN_LIST_INACTIVE_ALIAS={"list-inactive","li"}
 GuildManAddon.G_STRING_SLASH_SUBCMD_GUILDMAN_LIST_INACTIVE_DESC="list inactive guild members"
+
+GuildManAddon.G_ARRAY_SLASH_SUBCMD_GUILDMAN_LIST_GUILDS_ALIAS={"list-guilds","lg"}
+GuildManAddon.G_STRING_SLASH_SUBCMD_GUILDMAN_LIST_GUILDS_DESC="list guilds"
 
 
 --Global Libraries
@@ -83,7 +88,7 @@ function GuildManAddon.RegisterSlashCommands()
   )
   --Finish registering /gm slash command
 
-  --Register Subcommands
+  --Register Subcommands of /gm
   GuildManAddon.RegisterSlashSubCommand(
     command,
     GuildManAddon.G_ARRAY_SLASH_SUBCMD_GUILDMAN_PRUNE_ALIAS,
@@ -104,6 +109,13 @@ function GuildManAddon.RegisterSlashCommands()
     GuildManAddon.listInactive,
     GuildManAddon.G_STRING_SLASH_SUBCMD_GUILDMAN_LIST_INACTIVE_DESC
   )
+
+  GuildManAddon.RegisterSlashSubCommand(
+    command,
+    GuildManAddon.G_ARRAY_SLASH_SUBCMD_GUILDMAN_LIST_GUILDS_ALIAS,
+    GuildManAddon.listGuilds,
+    GuildManAddon.G_STRING_SLASH_SUBCMD_GUILDMAN_LIST_GUILDS_DESC
+  )
   --Finish Registering Subcommands
 end
 
@@ -115,12 +127,51 @@ end
 --Removes guild members offline for more than X days
 function GuildManAddon.listInactive()
   GuildManAddon.G_CHAT:Print("Listing inactive guild members...")
+  local numberOfGuilds = GetNumGuilds()
+
+  for guildIndex = 1, numberOfGuilds do
+    local guildName =  GetGuildName(GetGuildId(guildIndex))
+    local numMembers = GetNumGuildMembers(GetGuildId(guildIndex))
+    local numberOfInactiveMembers = 0
+    GuildManAddon.G_CHAT:Print("Processing " .. guildName )
+
+    for memberIndex = 1, numMembers do
+      local name, _, _, _, lastOnline = GetGuildMemberInfo(GetGuildId(guildIndex), memberIndex)
+      if(lastOnline > GuildManAddon.G_NUM_SECONDS_INACTIVE) then
+        GuildManAddon.G_CHAT:Print("Inactive: " .. name .. ", online: " .. GuildManAddon.convertSecondsToDays(lastOnline) .. " days ago")
+        numberOfInactiveMembers = numberOfInactiveMembers + 1
+      end
+    end
+    GuildManAddon.G_CHAT:Print("Inactive members: " .. numberOfInactiveMembers)
+  end
+  GuildManAddon.G_CHAT:Print("All Guilds Processed")
+end
+
+function GuildManAddon.listGuilds()
+  GuildManAddon.G_CHAT:Print("Guild List")
+  local numGuilds = GetNumGuilds()
+
+  for i = 1, numGuilds do
+    local guildName = GetGuildName(GetGuildId(i))
+    GuildManAddon.G_CHAT:Print(i .. " - " .. guildName)
+  end
+end
+
+function GuildManAddon.setGuild()
+  GuildManAddon.G_CHAT:Print("Setting Guild")
+  
 end
 
 --Prints the help info
 function GuildManAddon.printHelp()
   GuildManAddon.G_CHAT:Print("valid commands: \n/gm \n/gm prune \n/gm list-inactive")
 end
+
+function GuildManAddon.convertSecondsToDays(num)
+  return math.floor(num / 24 / 60 / 60)
+end
+
+
  
 EVENT_MANAGER:RegisterForEvent(GuildManAddon.name, EVENT_ADD_ON_LOADED, GuildManAddon.OnAddOnLoaded)
 
