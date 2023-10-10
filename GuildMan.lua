@@ -33,7 +33,7 @@ function GM_NS.sendLeavingMail(guildId, name)
   local guildName = GetGuildName(GetGuildId(guildIndex))
   local subject = "Goodbye " .. name .. " from " .. guildName .. "!"
   local body = "Hello " .. name .. ",\n"
-  .. "You've been removed from" .. guildName .. "for being inactive for more than "
+  .. "You've been removed from" .. guildName .. " for being inactive for more than "
   .. GM_NS.convertSecondsToDays(GM_NS.NUM_SECONDS_GUILD_MEMBER_CAN_BE_INACTIVE)
   .. " days.\n"
   .. "Thanks,\n"
