@@ -11,6 +11,7 @@
         "GetNumGuildMembers",
         "GetGuildMemberInfo",
         "GuildRemove",
-        "SendMail"
+        "SendMail",
+        "GetDisplayName"
     ]
 }

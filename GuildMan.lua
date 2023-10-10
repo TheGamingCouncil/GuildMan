@@ -8,7 +8,7 @@ GM_NS.INITIALIZE_MESSAGE = "Loaded Addon: " .. GM_NS.ADDON_NAME; -- message prin
 GM_NS.GOODBYE_EMAIL_SUBJECT = "Goodbye %s from %s!"
 GM_NS.GOODBYE_EMAIL_BODY =
     "Hello %s,\nYou've been removed from %s for being inactive for more than %d days.\nThanks,\nThe Gaming Council"
-GM_NS.WHITELIST = {"@RizzleMaTizzle"}; -- people to never kick from guilds
+GM_NS.WHITELIST = {GetDisplayName()}; -- people to never kick from guilds
 
 -- Global Libraries
 GM_NS.LOGGER = LibDebugLogger(GM_NS.ADDON_NAME); -- Debug logging
@@ -18,12 +18,13 @@ GM_NS.LIB_SLASH_CMDR = LibSlashCommander; -- CLI Library
 -- Functions
 
 --- Prints the help info
-function GM_NS.printHelp()
-    GM_NS.CHAT:Print("Help:\nType: /gm <command>\n<command> can be:")
-
-    for _, sub_cmd in ipairs(GM_NS.SLASH_SUBCMDS) do
-        GM_NS.CHAT:Print(" " .. sub_cmd[1][1] .. " (" .. sub_cmd[1][2] .. ")" .. " - " .. sub_cmd[3])
-    end
+function GM_NS.printHelp()  
+  local strHelp = "Help:\nType: /gm <command>\n<command> can be:\n"
+  for _, sub_cmd in ipairs(GM_NS.SLASH_SUBCMDS) do
+    local subCmdText = string.format("%s (%s) - %s \n",sub_cmd[1][1],sub_cmd[1][2],sub_cmd[3])
+    strHelp = strHelp + subCmdText
+  end
+  GM_NS.CHAT:Print(strHelp)
 end
 
 --- send mail
@@ -60,10 +61,7 @@ function GM_NS.operateOnInactiveMembers(kickMode)
     local numberOfInactiveMembers = 0
     local numberOfTotalMembers = GetNumGuildMembers(guildId)
     local guildName = GetGuildName(guildId)
-
-    local strMethodInfo = string.format("Guild: %s\n", guildName)
-    strMethodInfo = strMethodInfo + string.format("kickMode: %s\n", tostring(kickMode))
-    strMethodInfo = strMethodInfo + string.format("total guild members: %d", numberOfTotalMembers)
+    local strMethodInfo = string.format("Guild: %s\nkick mode: %s\ntotal guild members: %d", guildName, tostring(kickMode),  numberOfTotalMembers)
 
     GM_NS.CHAT:Print(strMethodInfo)
 
@@ -72,7 +70,7 @@ function GM_NS.operateOnInactiveMembers(kickMode)
 
         -- set to < for testing, usually >.
         if (tonumber(lastOnline) > tonumber(GM_NS.MAX_SECONDS_MEMBER_INACTIVE)) then
-            local inactiveInDays = GM_NS.SecondsToDays(GM_NS.MAX_SECONDS_MEMBER_INACTIVE)
+            local inactiveInDays = GM_NS.SecondsToDays(lastOnline)
 
             local strInactiveMember = string.format("Inactive: %s, online: %d days ago", name, inactiveInDays)
             GM_NS.CHAT:Print(strInactiveMember)
