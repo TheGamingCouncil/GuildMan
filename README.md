@@ -1,6 +1,8 @@
 # GuildMan
 A Guild Management Addon for Elder Scrolls Online
 
+# THIS IS BETA
+
 ## How to use
 
 1. List your guilds - /gm lg
@@ -16,9 +18,20 @@ A Guild Management Addon for Elder Scrolls Online
 2. LibDebugLogger>=180 
 3. LibSlashCommander
 
-## To test
+## To test:
 1. Install git
 2. Open up a command line in your ESO addon folder 
 3. Enter command git clone https://github.com/ja-m3s/GuildMan
 
-# THIS IS BETA
+## Ideas for improvement:
+1. Whitelist user running script
+2. Whitelist officers
+3. Optional Whitelist 
+4. Error checking for inputs
+5. Deploy via Minion
+6. Implement SavedVariables
+7. Make code modular
+8. Add tests
+9. Add a GUI
+10. Optional Confirmation Dialogs for dangerous actions
+11. Add scheduling, so it can run every day, hour, etc
