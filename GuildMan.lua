@@ -1,35 +1,33 @@
-GM_NS = {}; -- GuildMan Namespace
-
--- Global Vars
-GM_NS.ADDON_NAME = "GuildMan"; -- addon name
-GM_NS.MAX_SECONDS_MEMBER_INACTIVE = 604800; -- default is 7 days in seconds
-GM_NS.ACTIVE_GUILD = ""; -- guild to work on
-GM_NS.INITIALIZE_MESSAGE = "Loaded Addon: " .. GM_NS.ADDON_NAME; -- message printed on startup
-GM_NS.GOODBYE_EMAIL_SUBJECT = "Goodbye %s from %s!"
-GM_NS.GOODBYE_EMAIL_BODY =
-    "Hello %s,\nYou've been removed from %s for being inactive for more than %d days.\nThanks,\nThe Gaming Council"
-GM_NS.WHITELIST = {GetDisplayName()}; -- people to never kick from guilds
+-- GuildMan Namespace
+GM_NS = {
+  ADDON_NAME = "GuildMan",
+  SHORT_ADDON_NAME = "GM",
+  MAX_SECONDS_MEMBER_INACTIVE = 604800,
+  ACTIVE_GUILD = "",
+  GOODBYE_EMAIL_SUBJECT = "Goodbye %s from %s!",
+  GOODBYE_EMAIL_BODY = "Hello %s,\nYou've been removed from %s for being inactive for more than %d days.\nThanks,\nThe Gaming Council",
+  WHITELIST = {GetDisplayName()}
+};
 
 -- Global Libraries
 GM_NS.LOGGER = LibDebugLogger(GM_NS.ADDON_NAME); -- Debug logging
-GM_NS.CHAT = LibChatMessage(GM_NS.ADDON_NAME, "GM"); -- Output to chat
+GM_NS.CHAT = LibChatMessage(GM_NS.ADDON_NAME, GM_NS.SHORT_ADDON_NAME); -- Output to chat
 GM_NS.LIB_SLASH_CMDR = LibSlashCommander; -- CLI Library
 
 -- Functions
 
 --- Prints the help info
-function GM_NS.printHelp()  
+function GM_NS.printHelp()
   local strHelp = "Help:\nType: /gm <command>\n<command> can be:\n"
   for _, sub_cmd in ipairs(GM_NS.SLASH_SUBCMDS) do
-    local subCmdText = string.format("%s (%s) - %s \n",sub_cmd[1][1],sub_cmd[1][2],sub_cmd[3])
-    strHelp = strHelp + subCmdText
+    local strSubCmd = string.format("%s (%s) - %s \n",sub_cmd[1][1],sub_cmd[1][2],sub_cmd[3])
+    strHelp = strHelp .. strSubCmd
   end
   GM_NS.CHAT:Print(strHelp)
 end
 
 --- send mail
 function GM_NS.sendLeavingMail(guildId, name)
-
     local guildName = GetGuildName(guildId)
     local days = GM_NS.SecondsToDays(GM_NS.MAX_SECONDS_MEMBER_INACTIVE);
     local subject = string.format(GM_NS.GOODBYE_EMAIL_SUBJECT, name, guildName)
@@ -170,8 +168,8 @@ end
 
 --- Initialize addon
 function GM_NS.Initialize()
-    GM_NS.LOGGER:Info(GM_NS.INITIALIZE_MESSAGE)
-    GM_NS.CHAT:Print(GM_NS.INITIALIZE_MESSAGE)
+    GM_NS.LOGGER:Info("Loaded Addon: " .. GM_NS.ADDON_NAME)
+    GM_NS.CHAT:Print("Loaded Addon: " .. GM_NS.ADDON_NAME)
     GM_NS.RegisterSlashCommands()
 end
 
