@@ -1,8 +1,15 @@
 # GuildMan
 A Guild Management Addon for Elder Scrolls Online
 
-WIP
+## View all commands in game with:
+/gm 
 
-/gm - list help
-/gm prune - removes inactive guild members
-/gm list-inactive - lists inactive guild members
+## The following addons are dependencies:
+LibChatMessage LibDebugLogger>=180 LibSlashCommander
+
+## To test
+Install git
+Open up a command line in your ESO addon folder 
+Enter command git clone https://github.com/ja-m3s/GuildMan
+
+# THIS IS BETA
