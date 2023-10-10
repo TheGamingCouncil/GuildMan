@@ -3,14 +3,10 @@ A Guild Management Addon for Elder Scrolls Online
 
 ## How to use
 
-1. List your guilds
-    /gm lg
-2. Set active guild (number is position of guild in your guilds)
-    /gm sg 1 
-3. List inactive members
-    /gm li
-4. Purge inactive members
-    /gm p
+1. List your guilds - /gm lg
+2. Set active guild (number is position of guild in your guilds) - /gm sg 1 
+3. List inactive members - /gm li
+4. Purge inactive members - /gm p
 
 ## View all commands in game with:
     /gm 
