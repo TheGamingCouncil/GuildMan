@@ -1,0 +1,14 @@
+{
+    "Lua.diagnostics.globals": [
+        "LibChatMessage",
+        "LibDebugLogger",
+        "LibSlashCommander",
+        "EVENT_ADD_ON_LOADED",
+        "EVENT_MANAGER",
+        "GetNumGuilds",
+        "GetGuildName",
+        "GetGuildId",
+        "GetNumGuildMembers",
+        "GetGuildMemberInfo"
+    ]
+}
