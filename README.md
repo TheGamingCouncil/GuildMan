@@ -2,7 +2,7 @@
 A Guild Management Addon for Elder Scrolls Online
 
 ## View all commands in game with:
-`/gm 
+    /gm 
 
 ## The following addons are dependencies:
 1. LibChatMessage 
