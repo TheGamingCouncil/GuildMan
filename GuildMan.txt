@@ -1,6 +1,7 @@
 ## Title: GuildMan
 ## Description: Guild Management
 ## Author: @RizzleMaTizzle
+## Testing: @panrestrial
 ## APIVersion: 101039
 ## AddOnVersion: 1
 ## IsLibrary: False
